@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			html, body {
+				padding: 0;
+				margin: 0;
+			}
+
+			.instructions {
+				text-align: center;
+				font-style: italic;
+				font-size: 1.5em;
+				margin-top: 24%;
+			}
+
+			.project {
+				border: 1px solid black;
+				padding: 10px;
+				margin: 10px 10px 5px;
+				transition: opacity 0.2s ease;
+			}
+
+			.project.loading {
+				opacity: 0.2;
+			}
+
+			.log {
+				height: 200px;
+				font-family: consolas;
+				overflow-y: scroll;
+				background-color: #DDD;
+				margin-top: 10px;
+				padding: 5px;
+			}
+
+			h1 {
+				background-color: #CCC;
+				margin: 0 0 10px;
+				padding: 5px;
+				line-height: 1em;
+			}
+
+			button {
+				cursor: pointer;
+			}
+
+			.loading button {
+				cursor: default;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id='container'></div>
+
+		<script id="project_template" type="text/ractive">
+			<section class="project {{state}}">
+				<h1><input type="text" placeholder="Name your project" value="{{model.name}}"/></h1>
+
+				<button class="npm" on-click="runNpm">NPM install</button>
+
+				{{#each model.tasks}}
+					<button class="task" on-click="runTask:{{.}}">Run {{.}}</button>
+				{{/each}}
+
+				<button class="delete" on-click="delete">Delete project</button>
+
+				<div class="log">
+					{{#each model.log}}
+						{{.}}<br/>
+					{{/each}}
+				</div>
+			</section>
+		</script>
+
+		<script id="controller_template" type="text/ractive">
+			{{#if empty}}
+				<p class="instructions">Drag in a Gruntfile.js to start</p>
+			{{/if}}
+
+			{{#each projects}}
+				<project path='{{.}}'></project>
+			{{/each}}
+		</script>
+
+		<script src="ractive.min.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "GruntGUI",
+  "version": "0.1",
+  "main": "content/index.html",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "q": "^1.4.1"
+  }
+}
